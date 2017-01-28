@@ -127,7 +127,7 @@ E list_skip<E>::Search(E pData){
 }
 //输出跳跃表的内容
 template<class E>
-void list_skip<E>::print(){0
+void list_skip<E>::print(){
     SkipNode<E> * temp = NULL;
     for(int i = 0;i <= levels;++i){
         temp = head->forward[i];

@@ -7,9 +7,10 @@
 
 #ifndef _STORMDB_MD5_HASH_H
 #define _STORMDB_MD5_HASH_H
-#include "StormDB_Hash.h"
-class CMD5HashFunc:public HashFunc{
-public: 
-     virtual long  getHashVal(const char *str,int nTime);
+class CMD5HashFunc{
+public:
+    CMD5HashFunc()=default; 
+    long  getHashVal(const char *str,int nTime);
+    
 };
 #endif

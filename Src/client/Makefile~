@@ -1,0 +1,6 @@
+all:
+	g++ -o Client StormDB_Client.cpp StormDB_Command.cpp StormDB_Judge.cpp test/test_client.cpp 
+
+clean:
+	rm *.o
+

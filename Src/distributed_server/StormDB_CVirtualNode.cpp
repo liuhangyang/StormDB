@@ -7,14 +7,14 @@
 
 #include"StormDB_CVirtualNode.h"
 #include<iostream>
-CVirtualNode::CVirtualNode(CNode *pNode){
+CVirtualNode::CVirtualNode(std::shared_ptr<CNode> pNode){
     node = pNode;
 }
 void 
-CVirtualNode::setNode(CNode* pNode){
+CVirtualNode::setNode(std::shared_ptr<CNode> pNode){
     node = pNode;
 }
-CNode* 
+std::shared_ptr<CNode>
 CVirtualNode::getNode(){
     return node;
 }

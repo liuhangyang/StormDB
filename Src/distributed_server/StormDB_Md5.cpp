@@ -132,8 +132,8 @@ void MD5::transform(const uint1 block[blocksize])
 	FF (d, a, b, c, x[13], S12, 0xfd987193); /* 14 */
 	FF (c, d, a, b, x[14], S13, 0xa679438e); /* 15 */
 	FF (b, c, d, a, x[15], S14, 0x49b40821); /* 16 */
- 
-	/* 第二轮循环 */
+    
+    /* 第二轮循环 */
 	GG (a, b, c, d, x[ 1], S21, 0xf61e2562); /* 17 */
 	GG (d, a, b, c, x[ 6], S22, 0xc040b340); /* 18 */
 	GG (c, d, a, b, x[11], S23, 0x265e5a51); /* 19 */

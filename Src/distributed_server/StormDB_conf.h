@@ -8,7 +8,6 @@
 #ifndef _STORMDB_CONF_H
 #define _STORMDB_CONF_H
 
-#pragma once  
   
 #include <string>  
 #include <map>  
