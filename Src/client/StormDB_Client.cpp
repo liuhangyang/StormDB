@@ -102,13 +102,17 @@ void
 Client::hgetall(const std::vector<std::string> &data,string_vector &fields,string_vector &values){
     _send((Command() << data).getbuffer());
     string_vector all;
+    printf("recvbefore\n");
     _recv_multi_bulk_reply(all);
+    printf("recvahter\n");
 
 }
 void
 Client::_recv_multi_bulk_reply(string_vector all){
     char buf[1024];
+    bzero(buf,sizeof(buf));
     int num = read(_socket,buf,1024);
+    printf("all*************:%s\n",buf);
     if(strcmp(buf,"(nil)\r\n") == 0){
         printf("%s",buf);
     }else{
@@ -345,7 +349,7 @@ Client::_send(const std::string& msg){
     std::string strlength;
     strlength = intToByte(m);
     strlength += msg;
-   /* std::cout << "strlength:" <<strlength <<std::endl;
+   /*std::cout << "strlength:" <<strlength <<std::endl;
     printf("[0]%c\n",strlength[0]);
     printf("[1]%c\n",strlength[1]);
     printf("[2]%c\n",strlength[2]);

@@ -19,6 +19,7 @@ int Buffer::readFromFd(int fd){ //作为inputBuffer从套接字中读取数据�
         writeIndex_ += count;
         return count;
     }else{
+        printf("else\n");
         char extrabuf[65536];
         struct iovec vec[2];
 
@@ -46,9 +47,7 @@ int Buffer::readFromFd(int fd){ //作为inputBuffer从套接字中读取数据�
 int
 Buffer::writeToFd(int fd) //作为outputBuffer将buffer中的数据写入到套接字中
 {
-    std::cout <<"可读的数据大小:" <<readableSize() <<std::endl;
     int count = write(fd,getReadPeek(),readableSize()); //将buffer中的数据写入fd中;
-    printf("writecount------>:%d\n",count);
     assert(count >= 0);
 
     moveReadIndex(count);

@@ -41,13 +41,7 @@ namespace eylib{
             makeSureEnough(len); //确保空间可写
 
             std::copy(data,data + len,getWritePeek());//将data中的数据拷贝到buffer中去.
-            printf("buffer::可读的:%d\n",readableSize());
             moveWriteIndex(len);
-        }
-        void getData(char* data,int length){
-            std::copy(getReadPeek(),getReadPeek()+length,data);
-            data[length]='\0';
-            moveReadIndex(length);
         }
         void append(const void *data,int len){
             append((char *)data,len);

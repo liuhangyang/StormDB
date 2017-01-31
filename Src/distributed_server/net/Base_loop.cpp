@@ -41,16 +41,16 @@ int BaseLoop::createListenFd(void){
 }
 void
 BaseLoop::start(void){
-    struct sockaddr_in clientAddress;      //保存客户端地址
+    struct sockaddr_in clientAddress; //保存客户端地址
     socklen_t len = sizeof(clientAddress); //客户端地址长度
     int connfd;
-    listenFd_ = createListenFd();          //获得监听套接字
+    listenFd_ = createListenFd(); //获得监听套接字
     loopThreadPoolPtr_ -> setMessageCallback(messageCallback_); //设置读回调函数
     loopThreadPoolPtr_ -> setCloseCallback(closeCallback_); //设置关闭回调函数
     loopThreadPoolPtr_ -> setWriteCompleteCallback(writeCompleteCallback_);
     loopThreadPoolPtr_ -> setConnectionCallback(connectionCallback_);
     loopThreadPoolPtr_ -> start(); //开启loop线程池
-    // 主线程负责accpet新的连接,接收到连接后就注册到event_loop_thread_pool里.
+    //主线程负责accpet新的连接,接收到连接后就注册到event_loop_thread_pool里.
     while(1){
         connfd = accept(listenFd_,(struct sockaddr *)&clientAddress,&len);
         printf("connfd:%d\n",connfd);

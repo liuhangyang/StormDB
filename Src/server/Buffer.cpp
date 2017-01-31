@@ -20,6 +20,7 @@ int Buffer::readFromFd(int fd){ //作为inputBuffer从套接字中读取数据�
         return count;
     }else{
         char extrabuf[65536];
+        bzero(extrabuf,sizeof(extrabuf));
         struct iovec vec[2];
 
         int writeable = writeableSize();
@@ -27,7 +28,9 @@ int Buffer::readFromFd(int fd){ //作为inputBuffer从套接字中读取数据�
         vec[0].iov_len = writeableSize();
         vec[1].iov_base = extrabuf;
         vec[1].iov_len = sizeof(extrabuf);
-
+ 
+        std::cout<< "可写的:" <<writeableSize() <<std::endl;
+        std::cout << "可读的:" <<readableSize() <<std::endl;
         int count = readv(fd,vec,2);
         printf("cout------------------------->>>>>>>>>>>>:%d\n",count);
         assert(count >= 0);
@@ -46,6 +49,7 @@ int Buffer::readFromFd(int fd){ //作为inputBuffer从套接字中读取数据�
 int
 Buffer::writeToFd(int fd) //作为outputBuffer将buffer中的数据写入到套接字中
 {
+    std::cout << "可读数据的大小:" <<readableSize() << std::endl;
     int count = write(fd,getReadPeek(),readableSize()); //将buffer中的数据写入fd中;
     assert(count >= 0);
 

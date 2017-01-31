@@ -27,7 +27,7 @@ Task::do_task(Task &task){
     Str += items[0];
     Str += "\r\n";
     Str += a;
-   // std::cout << "Str.size : "<<Str.size() <<std::endl;
+    std::cout << "Str.size : "<<Str.size() <<std::endl;
     std::string str = ((task.conn)->outputBuffer_).intToByte(Str);
     ((task.conn)->outputBuffer_).append(str);
     std::cout <<"fd: "<< (task.conn)->fd_ <<std::endl;

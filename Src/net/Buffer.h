@@ -14,7 +14,6 @@
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
-#include <iostream>
 namespace eylib{
     class Buffer{
         public:
@@ -25,9 +24,6 @@ namespace eylib{
             assert(writeIndex_ == 0);
         }
         ~Buffer(){}
-        void getposLength(int length,char *buffer){
-            memcpy(buffer,getReadPeek(),length);
-        }
         int readableSize(){ //可读字节数
             return writeIndex_ - readerIndex_;
         }
@@ -41,13 +37,7 @@ namespace eylib{
             makeSureEnough(len); //确保空间可写
 
             std::copy(data,data + len,getWritePeek());//将data中的数据拷贝到buffer中去.
-            printf("buffer::可读的:%d\n",readableSize());
             moveWriteIndex(len);
-        }
-        void getData(char* data,int length){
-            std::copy(getReadPeek(),getReadPeek()+length,data);
-            data[length]='\0';
-            moveReadIndex(length);
         }
         void append(const void *data,int len){
             append((char *)data,len);
@@ -73,7 +63,6 @@ namespace eylib{
             assert(readableSize() >= sizeof(int64_t));
             int64_t be64 = 0;
             memcpy(&be64,getReadPeek(),sizeof(be64));
-            printf("be64:%ld\n",be64);
             return networkToHost64(be64);
         }
         int32_t peekInt32(){
@@ -87,23 +76,6 @@ namespace eylib{
             int16_t be16 = 0;
             memcpy(&be16,getReadPeek(),sizeof(be16));
             return networkToHost16(be16);
-        }
-        int getHeadLength(){
-            char headbuf[4];
-            bzero(headbuf,4);
-            memcpy(headbuf,getReadPeek(),4);
-           /* std::cout << headbuf <<std::endl;
-            printf("[0]%c\n",headbuf[0]);
-            printf("[1]%c\n",headbuf[1]);
-            printf("[2]%c\n",headbuf[2]);
-            printf("[3]%c\n",headbuf[3]);*/
-            int a = (int)(headbuf[0] & 0x7f);
-            int b = (int)(headbuf[1] & 0x7f)*128;
-            int c = (int)(headbuf[2] & 0x7f)*16384;
-            int d = (int)(headbuf[3] & 0x7f)*2097152;
-            moveReadIndex(4);
-            return a+b+c+d;
-
         }
         char *getReadPeek(){ //获得可读位置.
             return begin() + readerIndex_;

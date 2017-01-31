@@ -14,6 +14,7 @@ using namespace eylib;
 void 
 messagecallback(std::shared_ptr<eylib::Connection> p,int length){
     char buf[MAXBUF];
+    bzero(buf,sizeof(buf));
     p->inputBuffer_.getData(buf,length);
     //printf("buf:%s\n",buf);
     std::string Str("");
@@ -24,10 +25,11 @@ messagecallback(std::shared_ptr<eylib::Connection> p,int length){
     Str += '\0';
     std::string str = intToByte(Str.size());
     str += Str;
-    //std::cout << "str================= "<<str <<  std::endl;
+    std::cout << "str================= "<<str <<"str.size----->:"<<str.size()<<  std::endl;
     p->outputBuffer_.append(str);
     int fd = conhash.getFd(buf);
     int sendSize = p->send(fd);
+    std::cout <<"sendSize"  <<sendSize <<std::endl;
     if(sendSize < p->outputBuffer_.readableSize()){  //sendSize < 可读的字节,发送缓冲区已满,加入clientName和fd的映射,为注册的写事件做准备.
         senWriteMap[p->ConnectionName_] = fd;
     }
@@ -58,6 +60,7 @@ void  closecallback(std::shared_ptr<eylib::Connection> p){
 }
 void Clientmessagecallback1(std::shared_ptr<ClientConnect> p,int m){
         char buf[1024];
+        bzero(buf,sizeof(buf));
         p->inputBuffer_.getData(buf,m);
         printf("buf ***************->:%s\n",buf);
         const char *a = getName(buf);
@@ -65,6 +68,7 @@ void Clientmessagecallback1(std::shared_ptr<ClientConnect> p,int m){
       //  std::cout << "map: " << clientMap[str] <<std::endl;
         std::string Str("");
         getClientData(buf,Str);
+        std::cout <<"Str:"<< Str <<std::endl; 
         std::cout << "Str.size() :" <<Str.size() <<std::endl;
         clientMap[str]->outputBuffer_.append(Str);
         clientMap[str]->send(clientMap[str]->fd_);

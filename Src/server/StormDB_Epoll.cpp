@@ -59,7 +59,7 @@ ServerEpoll::handleRead(int fd){
     int count = conn->inputBuffer_.readFromFd(fd);
     int t = count -4;
     int m = conn->inputBuffer_.getHeadLength();
-    std::cout << "count: " << count << "m:"<< m<<std::endl;
+    std::cout << "count: " << count << "m: "<< m<<std::endl;
     if( t  == m ){
         serverMessageCallback_(conn,m);
     }

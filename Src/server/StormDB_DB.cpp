@@ -143,6 +143,7 @@ StormDB::StormDBDestory(){
 }
 bool
 StormDB::StormDBFind(std::string rhs){
+    printf("Find执行了\n");
     char *a = new char[rhs.size() + 10];
     StormDB_CStr(a,rhs);
     unsigned int key = GetKey_char(a);
@@ -240,12 +241,6 @@ int StormDB::StormDB_Value_Append(std::string rhs,void *obj){
 }
 bool
 StormDB::StormDB_Value_Del(std::string rhs,void *obj){
-    if(StormDBFind(rhs)){
-        if(StormDB_Value_Size(rhs) == 0){
-            StormDBDel(rhs);
-            return false;
-        }
-    }
     char *a=new char[rhs.size()+10];
     StormDB_CStr(a,rhs);
     unsigned int key = GetKey_char(a);
@@ -255,6 +250,14 @@ StormDB::StormDB_Value_Del(std::string rhs,void *obj){
             if((*item).KeyValDel(obj) == false){
                 return false;
             }
+            if(StormDBFind(rhs)){
+            printf("find\n");
+            printf("%u\n",StormDB_Value_Size(rhs));
+            if(StormDB_Value_Size(rhs) == 0){
+                StormDBDel(rhs);
+                return true;
+            }
+    }
             return true;
         }
     }
@@ -265,6 +268,14 @@ StormDB::StormDB_Value_Del(std::string rhs,void *obj){
                 if((*item).KeyValDel(obj) == false){
                     return false;
                 }
+                if(StormDBFind(rhs)){
+                printf("find\n");
+                printf("%u\n",StormDB_Value_Size(rhs));
+                if(StormDB_Value_Size(rhs) == 0){
+                    StormDBDel(rhs);
+                    return true;
+        }
+    }
                 return true;
             }
         }
@@ -334,6 +345,7 @@ StormDB::StormDB_Value_Size(std::string rhs){
             }
         }
     }
+    return 0;
 
 }
 bool
